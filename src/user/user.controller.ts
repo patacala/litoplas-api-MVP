@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, HttpCode, HttpStatus, BadRequestException} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User, USER_ROLE } from './entity/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,7 +12,7 @@ export class UserController {
 
     @Get()
     getUsers(): User[] {
-        return this.userService.getUsers()
+        return this.userService.getUsers();
     }
 
     @Post()
@@ -23,7 +23,7 @@ export class UserController {
     @Put(':id')
     updateUser(@Body() body: CreateUserDto, @Param('id') id: string): User {
         const user = this.userService.getUserById(id);
-        if(!user) return;
+        if(!user) throw new BadRequestException('User not found');
         return this.userService.updateUser(id, body);
     
     }
@@ -31,10 +31,10 @@ export class UserController {
     @Delete('/:id')
     deleteUser(@Param('id') id: string) {
         const user = this.userService.getUserById(id);
-        if(user){
-            this.userService.deleteUser(id);
-            return 'Usuario eliminado'
-        }
+        if(!user) throw new BadRequestException('User not found');
+        
+        this.userService.deleteUser(id);
+        return 'Usuario eliminado'
     }
 
 
