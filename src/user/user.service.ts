@@ -22,7 +22,7 @@ export class UserService {
   ) {}
 
   async getUsers(): Promise<User[]> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({relations:['permissions']});
   }
 
   async getUserById(id: number): Promise<User> {

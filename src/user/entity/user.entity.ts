@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Permission } from "src/permissions/entity/permissions.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum USER_ROLE {
   ADMIN = 'ADMIN',
@@ -14,7 +15,12 @@ export class User {
   @Column({nullable: false})
   name: string;
 
-  @Column({nullable: false})
+  @Column({
+    nullable: false,
+    type: 'varchar',
+    length: 150,
+    unique: true
+  })
   email: string;
 
   @Column({nullable: false})
@@ -31,4 +37,19 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(type => Permission)
+  @JoinTable({
+    name:'user_permissions',
+    joinColumn: {
+      name: 'user',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name:'permission',
+      referencedColumnName:'id'
+    },
+  })
+  permissions: Permission[]
+
 }
