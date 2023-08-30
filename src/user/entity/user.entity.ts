@@ -1,4 +1,6 @@
-import { Permission } from "src/permissions/entity/permissions.entity";
+import { IUser } from "src/interfaces/user.interface";
+import { BaseEntity } from "../../config/base.entity";
+import { Permission } from "../../permissions/entity/permissions.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum USER_ROLE {
@@ -8,10 +10,7 @@ export enum USER_ROLE {
 }
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
-
+export class User extends BaseEntity implements IUser {
   @Column({nullable: false})
   name: string;
 
@@ -32,12 +31,6 @@ export class User {
   @Column({nullable: true})
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
   @ManyToMany(type => Permission)
   @JoinTable({
     name:'user_permissions',
@@ -51,5 +44,4 @@ export class User {
     },
   })
   permissions: Permission[]
-
 }
