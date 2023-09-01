@@ -1,4 +1,8 @@
-import { USER_ROLE } from "../user/entity/user.entity";
+export enum USER_ROLE {
+    ADMIN = 'ADMIN',
+    USER = 'USER',
+    ROOT = 'ROOT',
+}
 
 export interface IUser {
     id: number;

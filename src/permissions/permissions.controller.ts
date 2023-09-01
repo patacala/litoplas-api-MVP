@@ -21,7 +21,7 @@ export class PermissionsController {
     return this.permissionService.createPermission(body);
   }
 
-  @Put(':id')
+  @Put('/:id')
   updateUser(@Body() body: UpdatePermissionDto, @Param('id') id: number): Promise<Permission> {
     return this.permissionService.updatePermission(id, body);
   }
@@ -29,6 +29,6 @@ export class PermissionsController {
   @Delete('/:id')
   async deleteUser(@Param('id') id: number): Promise<string> {
     await this.permissionService.deletePermission(id);
-    return 'Usuario eliminado';
+    return ;
   }
 }

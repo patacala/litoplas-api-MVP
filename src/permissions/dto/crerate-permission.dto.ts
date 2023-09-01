@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsBoolean, IsString } from "class-validator";
 
 export class CreatePermissionDto {
     @IsString()
@@ -6,5 +6,8 @@ export class CreatePermissionDto {
   
     @IsString()
     description: string;
+
+    @IsBoolean()
+    isActive: boolean;
 }
   
