@@ -10,13 +10,13 @@ import {
   HttpStatus,
   BadRequestException,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { User } from './entity/user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserService } from '../services/user.service';
+import { User } from '../entities/user.entity';
+import { CreateUserDto } from '../dto/create-user.dto';
 import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserPermissionDto } from './dto/create-user-permission.dto';
-import { UserPermissionEntity } from './entity/user-permission.entity';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { CreateUserPermissionDto } from '../dto/create-user-permission.dto';
+import { UserPermissionEntity } from '../entities/user-permission.entity';
 
 @ApiTags('Users')
 @Controller('users')

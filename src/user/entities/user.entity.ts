@@ -3,6 +3,7 @@ import { BaseEntity } from "../../config/base.entity";
 import { Permission } from "../../permissions/entity/permissions.entity";
 import { Column,  Entity,  JoinTable, ManyToMany, OneToMany,} from "typeorm";
 import { UserPermissionEntity } from "./user-permission.entity";
+import { IsNotEmpty } from "class-validator";
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -17,12 +18,15 @@ export class User extends BaseEntity implements IUser {
   })
   email: string;
 
+  @IsNotEmpty()
   @Column({nullable: false})
   phone: string;
 
+  @IsNotEmpty()
   @Column({nullable: false})
   role: USER_ROLE;
 
+  @IsNotEmpty()
   @Column({nullable: true})
   password: string;
 

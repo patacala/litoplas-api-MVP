@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PermissionsModule } from './permissions/permissions.module';
 import { ConfigModule } from '@nestjs/config';
 import { DataSourceConfig } from './config/data.source';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -14,7 +15,8 @@ import { DataSourceConfig } from './config/data.source';
     }),
     TypeOrmModule.forRoot(DataSourceConfig), 
     UserModule,
-    PermissionsModule
+    PermissionsModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsString } from "class-validator";
-import { User } from "../entity/user.entity";
+import { User } from "../entities/user.entity";
 import { Permission } from "../../permissions/entity/permissions.entity";
 
 export class CreateUserPermissionDto {

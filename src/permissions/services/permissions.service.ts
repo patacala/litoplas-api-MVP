@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Permission } from './entity/permissions.entity';
+import { Permission } from '../entity/permissions.entity';
 import { Repository } from 'typeorm';
-import { CreatePermissionDto } from './dto/crerate-permission.dto';
-import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { CreatePermissionDto } from '../dto/crerate-permission.dto';
+import { UpdatePermissionDto } from '../dto/update-permission.dto';
 
 @Injectable()
 export class PermissionsService {

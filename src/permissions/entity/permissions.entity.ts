@@ -1,6 +1,6 @@
 import { BaseEntity } from "../../config/base.entity";
 import { IPermission } from "../../interfaces/permission.interface";
-import { UserPermissionEntity } from "../../user/entity/user-permission.entity";
+import { UserPermissionEntity } from "../../user/entities/user-permission.entity";
 import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()

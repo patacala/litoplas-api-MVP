@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as morgan from 'morgan';
-import { ConfigService } from '@nestjs/config';
 import { CORS } from './constants';
 
 async function bootstrap() {
@@ -35,8 +34,7 @@ async function bootstrap() {
     }
   });
 
-  const configService = app.get(ConfigService);
-  await app.listen(configService.get('PORT'));
+  await app.listen(Number(process.env.PORT));
   console.log(`Application running on: ${await app.getUrl()}`);
 }
 bootstrap();
