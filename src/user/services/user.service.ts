@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { v4 as idGenerator } from 'uuid';
@@ -10,6 +10,7 @@ import { UserPermissionEntity } from '../entities/user-permission.entity';
 import { ramdomPasswordGenerations } from '../../utils/helper';
 import * as bcrypt from 'bcrypt';
 import { IUser } from 'src/interfaces/user.interface';
+import { PermissionsService } from '../../permissions/services/permissions.service';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,8 @@ export class UserService {
 
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(UserPermissionEntity) private readonly UserPermissionRepository: Repository<UserPermissionEntity>
+    @InjectRepository(UserPermissionEntity) private readonly UserPermissionRepository: Repository<UserPermissionEntity>,
+    private readonly permissionsService: PermissionsService
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -81,8 +83,20 @@ export class UserService {
   }
 
   // USER PERMISSION SECTION
-
   async createUserPermission(data: CreateUserPermissionDto): Promise<UserPermissionEntity> {
+    const  { user, permission } = data 
+    const isUser = await this.getUserById(Number(user));
+    const isPermission = await this.permissionsService.getPermissionById(Number(permission));
+    if( isUser.id === Number(user) && isPermission.id === Number(permission)) throw new BadRequestException('This permissions is already exists');
+    const userPermission: UserPermissionEntity = this.UserPermissionRepository.create(data);
+    return await this.UserPermissionRepository.save(userPermission);
+  }
+
+  async existsPermissionOnUser(data: CreateUserPermissionDto): Promise<UserPermissionEntity> {
+    const  { user, permission } = data 
+    const isUser = await this.getUserById(Number(user));
+    const isPermission = await this.permissionsService.getPermissionById(Number(permission));
+    if( isUser.id === Number(user) && isPermission.id === Number(permission)) throw new BadRequestException('This permissions is already exists');
     const userPermission: UserPermissionEntity = this.UserPermissionRepository.create(data);
     return await this.UserPermissionRepository.save(userPermission);
   }

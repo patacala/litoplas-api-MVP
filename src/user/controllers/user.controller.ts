@@ -9,6 +9,7 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { User } from '../entities/user.entity';
@@ -17,11 +18,16 @@ import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { CreateUserPermissionDto } from '../dto/create-user-permission.dto';
 import { UserPermissionEntity } from '../entities/user-permission.entity';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { Public } from '../../auth/decorators/public.decorator';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService
+    ) {}
 
   @Get()
   getUsers(): Promise<User[]> {

@@ -13,6 +13,7 @@ import { PermissionsService } from './services/permissions.service';
     controllers: [PermissionsController],
     providers: [
         PermissionsService
-    ]
+    ],
+    exports: [PermissionsService, TypeOrmModule]
 })
 export class PermissionsModule {}

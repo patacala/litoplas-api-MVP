@@ -26,7 +26,8 @@ export class AuthService {
     generateJWT(user) {
         const payload = {...user}
         return {
-            access_token: this.jwtService.sign(payload)
+            access_token: this.jwtService.sign(payload),
+            user
         }
     }
 
